@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דיני הזכרת גשמים: זמן מול כמות</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            margin: 20px;
+            width: calc(100% - 40px);
+            height: calc(100% - 40px);
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            display: flex;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide-front, .slide-back {
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide-back {
+            display: none;
+            background: #f8f9fa;
+            overflow-y: auto;
+        }
+        
+        .slide.flipped .slide-front {
+            display: none;
+        }
+        
+        .slide.flipped .slide-back {
+            display: flex;
+        }
+        
+        .slide-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .slide-summary {
+            font-size: 1.3em;
+            line-height: 1.8;
+            text-align: center;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .slide-detail {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #444;
+        }
+        
+        .slide-detail h3 {
+            color: #2c3e50;
+            font-size: 1.4em;
+            margin: 20px 0 10px 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        
+        .slide-detail p {
+            margin-bottom: 15px;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 12px 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .flip-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .flip-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        
+        .slide-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.1);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .title-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .title-slide .slide-title {
+            font-size: 3.5em;
+            color: white;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+        
+        .title-slide .slide-summary {
+            font-size: 1.5em;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .quote {
+            background: #ecf0f1;
+            border-right: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .hebrew-quote {
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <div class="slide-front">
+                <div class="slide-counter">1 / 11</div>
+                <h1 class="slide-title">דיני הזכרת גשמים</h1>
+                <p class="slide-summary">זמן מול כמות<br>מחלוקת יסודית בהלכה</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Introduction -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">2 / 11</div>
+                <h2 class="slide-title">מבוא: הבעיה ההלכתית הבסיסית</h2>
+                <p class="slide-summary">
+                    <span class="highlight">השאלה המרכזית:</span><br>
+                    כיצד ניתן לקבוע מתי התרגל המתפלל לנוסח החדש?<br><br>
+                    <strong>עיקרון הירושלמי:</strong> לאחר 30 יום - חזקה שהתרגל לנוסח החדש
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">2 / 11</div>
+                <div class="slide-detail">
+                    <h3>הבעיה ההלכתית הבסיסית</h3>
+                    <p>דיני הזכרת גשמים בתפילה מציגים בעיה הלכתית מעניינת: כיצד ניתן לקבוע מתי התרגל המתפלל לנוסח החדש?</p>
+                    
+                    <div class="quote">
+                        <p class="hebrew-quote">"תני נתפלל ואינו יודע מה הזכיר אם לאו, קודם שלושים יום, חזקה מה שהוא למוד מזכיר, מכאן ואילך מה שצריך מזכיר"</p>
+                    </div>
+                    
+                    <p>התלמוד הירושלמי (תענית פרק א') קובע עיקרון בסיסי: כלומר, לפני שלושים יום מתחילת העונה, חזקה שהאדם אמר את הנוסח הישן, ולאחר מכן - את הנוסח החדש.</p>
+                    
+                    <p>דין זה, שנפסק להלכה בטור ובשולחן ערוך (אורח חיים סי' קיד ס"ח), מעורר שאלה יסודית: האם שלושים יום הם במדד זמני, או שמא מדובר במספר מסוים של חזרות על הנוסח הנדרש ליצירת הרגל?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Maharam -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">3 / 11</div>
+                <h2 class="slide-title">עמדת מהר"ם מרוטנבורג</h2>
+                <p class="slide-summary">
+                    <span class="highlight">גישת הכמות:</span><br>
+                    90 אמירות בשמיני עצרת = 30 יום × 3 תפילות<br><br>
+                    <strong>העיקרון:</strong> ההתרגלות תלויה במספר החזרות, לא בזמן
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">3 / 11</div>
+                <div class="slide-detail">
+                    <h3>עמדת מהר"ם מרוטנבורג: גישת הכמות</h3>
+                    <p>מנהג המהר"ם מרוטנבורג היה לומר בשמיני עצרת תשעים פעמים "משיב הרוח ומוריד הגשם", שהם כמספר הפעמים שאומרים את הנוסח בשלושים ימי תפילה רגילה (30 יום × 3 תפילות). לדעתו, לאחר אמירה זו, אם יסתפק האדם מאוחר יותר אם הזכיר גשמים, אינו צריך לחזור על התפילה.</p>
+                    
+                    <h3>ההוכחה מדיני שור המועד</h3>
+                    <p>המהר"ם הביא ראיה מעניינת מדיני שור המועד בבבא קמא (כג ע"ב). הגמרא קובעת שאם שור נגח שלוש פעמים במרווחי זמן רחוקים והוחזק כמועד, "ריחק נגיחותיו חייב, קירב נגיחותיו לא כל שכן". מהר"ם הסיק קל וחומר: אם לאחר שלושים יום האדם נחשב "רגיל" לנוסח החדש, כל שכן שתשעים אמירות ביום אחד יועילו להתרגלות.</p>
+                    
+                    <p>ההיגיון שמאחורי גישה זו - ההתרגלות היא תוצר של חזרה, וניתן לרכז את החזרות הנדרשות בזמן קצר ולהשיג את אותה תוצאה.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Rabbeinu Peretz -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">4 / 11</div>
+                <h2 class="slide-title">התנגדות רבינו פרץ</h2>
+                <p class="slide-summary">
+                    <span class="highlight">"לא חזינא לרבנן קשישי דצרפת דעבדי הכי"</span><br><br>
+                    <strong>הטענה:</strong> ההתרגלות של הלשון שונה מהוכחה על טבע קבוע<br>
+                    זה תהליך שמחייב זמן אמיתי
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">4 / 11</div>
+                <div class="slide-detail">
+                    <h3>התנגדות רבינו פרץ</h3>
+                    <div class="quote">
+                        <p class="hebrew-quote">"לא חזינא לרבנן קשישי דצרפת דעבדי הכי"</p>
+                    </div>
+                    
+                    <p>רבינו פרץ דחה בתוקף את גישת מהר"ם, בטענה שאין דמיון בין דיני שור המועד לדיני הזכרת גשמים (התרגלות הלשון בתפילה). לדבריו: "שאין הנדון דומה לראיה, דהתם טעמא משום שהוחזק ליגח, ואם הוחזק ג' רחוקות כל שכן בג' קרובות, אבל גשם שנתקן בתפילה, והדבר תלוי בהרגל לשונו, לא אמרינן הכי".</p>
+                    
+                    <h3>ההבחנה העקרונית</h3>
+                    <p>רבינו פרץ מבחין בין שני סוגי "הרגלה":</p>
+                    
+                    <p><strong>הוכחה על טבע קבוע (שור מועד):</strong> כאן הנגיחות מעידות על מהות השור, ולכן ריכוז הנגיחות אף מחזק את הראיה.</p>
+                    
+                    <p><strong>התרגלות הלשון (תפילה):</strong> כאן מדובר בתהליך שמייצר התרגלות אמיתית של הלשון, שאינה יכולה להיווצר באופן מלאכותי ללא קשר לזמן.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Calculation Problem -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">5 / 11</div>
+                <h2 class="slide-title">בעיה משעשעת במהר"ם</h2>
+                <p class="slide-summary">
+                    <span class="highlight">הקושי בחישוב:</span><br>
+                    30 יום = יותר מ-90 תפילות!<br><br>
+                    <strong>החתם סופר:</strong> 101 תפילות<br>
+                    <strong>הכף החיים:</strong> 103 תפילות
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">5 / 11</div>
+                <div class="slide-detail">
+                    <h3>בעיה משעשעת במהר"ם והפתרונות השונים</h3>
+                    
+                    <h3>הקושי בחישוב התפילות</h3>
+                    <p>בעיה בגישת מהר"ם התגלתה כאשר מחשבים את מספר התפילות בפועל. בשלושים יום יש למעלה מ-90 תפילות, בשל תפילות מוסף בשבתות ובחגים. החתם סופר חישב 101 תפילות, והכף החיים הגיע למספר 103.</p>
+                    
+                    <p>יתרה מזאת, הרמ"א בדרכי משה העיר קושי נוסף: בשאלת גשמים ("ותן טל ומטר") המצב הפוך - יש פחות מ-90 פעמים בשלושים יום, כיון שאין שואלים גשמים בשבת.</p>
+                    
+                    <h3>פתרון הדרכי משה</h3>
+                    <p>הדרכי משה הציע שמהר"ם התכוון לממוצע של 90 תפילות בשלושים יום רגילים, ולא לחישוב מדויק. לפי הבנה זו, המספר 90 הוא אינדיקטור כללי ולא נוסחה מתמטית מדויקת.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Practical Cases -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">6 / 11</div>
+                <h2 class="slide-title">השלכות הלכתיות מעשיות</h2>
+                <p class="slide-summary">
+                    <span class="highlight">מקרים מורכבים:</span><br>
+                    • המתפלל שהתחיל מאוחר<br>
+                    • נשים שאינן מתפללות ערבית<br>
+                    • שליח ציבור קבוע
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">6 / 11</div>
+                <div class="slide-detail">
+                    <h3>השלכות הלכתיות מעשיות</h3>
+                    <p>המחלוקת בין הגישות יוצרת מקרים מעשיים מורכבים:</p>
+                    
+                    <h3>המתפלל שהתחיל מאוחר</h3>
+                    <p>אדם ששכח להתחיל לומר "ותן טל ומטר" מ-ז' במרחשון, והתחיל רק לאחר כמה שבועות. כעבור שלושים יום מתחילת העונה (אך לא מתחילת האמירה שלו), האם נחשב "רגיל"? לפי הגישה הזמנית - כן, לפי הגישה הכמותית - לא.</p>
+                    
+                    <h3>נשים שאינן מתפללות ערבית</h3>
+                    <p>נשים רבות נוהגות להתפלל רק שחרית ומנחה. בשלושים יום הן אומרות רק 60 פעמים "ותן טל ומטר". לפי מהר"ם - לא התרגלו מספיק, לפי רבינו פרץ - התרגלו.</p>
+                    
+                    <h3>שליח ציבור קבוע</h3>
+                    <p>אבל המשמש כשליח ציבור מתפלל הרבה יותר מהממוצע. האם הוא מתרגל יותר מהר? לפי מהר"ם - כן, לאחר השלמת המספר הנדרש, לפי רבינו פרץ - לא, עדיין צריך שלושים יום.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Shulchan Aruch -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">7 / 11</div>
+                <h2 class="slide-title">עמדת השולחן ערוך</h2>
+                <p class="slide-summary">
+                    <span class="highlight">פסק כמהר"ם</span><br><br>
+                    <strong>אבל:</strong> המג"א הקשה מסתירה פנימית<br>
+                    בדיני שור המועד השולחן ערוך פסק <em>נגד</em> רבי מאיר
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">7 / 11</div>
+                <div class="slide-detail">
+                    <h3>הפסיקה ההלכתית והפשרה</h3>
+                    
+                    <h3>עמדת השולחן ערוך</h3>
+                    <p>השולחן ערוך (או"ח סי' קיד ס"ח) פסק כמהר"ם מרוטנבורג, אך המג"א (ס"ק יג) הקשה על כך מסתירה פנימית בפסיקות השולחן ערוך עצמו. בדיני שור המועד, השולחן ערוך פסק דלא כרבי מאיר (שעליו נסמך מהר"ם), מה שמערער את הבסיס לפסיקתו כמהר"ם…</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Gra -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">8 / 11</div>
+                <h2 class="slide-title">עמדת הגר"א</h2>
+                <p class="slide-summary">
+                    <span class="highlight">דחה את שיטת מהר"ם</span><br><br>
+                    <strong>הכריע כרבינו פרץ:</strong><br>
+                    רק שיעור 30 יום המפורש בירושלמי קובע את ההלכה
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">8 / 11</div>
+                <div class="slide-detail">
+                    <h3>עמדת הגר"א</h3>
+                    <p>הגר"א בביאורו לשולחן ערוך דחה את שיטת מהר"ם והכריע כרבינו פרץ, בטענה שהסוגיא במסכת תענית לא כרבי מאיר. לדרכו, רק שיעור שלושים יום המפורש בירושלמי קובע את ההלכה.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Mishnah Berurah -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">9 / 11</div>
+                <h2 class="slide-title">פשרת המשנה ברורה</h2>
+                <p class="slide-summary">
+                    <span class="highlight">"ספק ברכות להקל"</span><br><br>
+                    <strong>גישת הפשרה:</strong><br>
+                    • לענין זמן: 30 יום מספיק<br>
+                    • לענין כמות: 90+ פעמים מספיק גם לפני 30 יום
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">9 / 11</div>
+                <div class="slide-detail">
+                    <h3>פשרת המשנה ברורה</h3>
+                    <p>המשנה ברורה (ס"ק מא) אימץ גישת פשרה מעשית: "דלמעשה יש להקל כשני השיטות דספק ברכות להקל". כלומר:</p>
+                    
+                    <p><strong>לענין זמן:</strong> מספיק שלושים יום (כרבינו פרץ)</p>
+                    
+                    <p><strong>לענין כמות:</strong> אם אמר 90+ פעמים, מספיק גם לפני שלושים יום (כמהר"ם)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Additional Laws -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">10 / 11</div>
+                <h2 class="slide-title">דינים נוספים ופרטיהם</h2>
+                <p class="slide-summary">
+                    <span class="highlight">יישום לנוסחים אחרים:</span><br>
+                    המשנה ברורה דחה את השימוש ב"המלך הקדוש"<br><br>
+                    <strong>מנהג ירושלים:</strong> 90 פעמים "מוריד הגשם" בשמחת תורה
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">10 / 11</div>
+                <div class="slide-detail">
+                    <h3>דינים נוספים ופרטיהם</h3>
+                    
+                    <h3>ניסיון יישום לנוסחים אחרים</h3>
+                    <p>השאלה עלתה: האם ניתן ליישם את שיטת מהר"ם לנוסחים אחרים, כגון "המלך הקדוש" בעשרת ימי תשובה? המשנה ברורה ושער הציון (או"ח סי' תקפב) דחו רעיון זה, מכמה טעמים:</p>
+                    
+                    <p><strong>תחום יישום מוגבל:</strong> שיטת מהר"ם נאמרה ספציפית לגשמים</p>
+                    
+                    <p><strong>חוסר קבלה:</strong> רוב הפוסקים דחו את שיטת מהר"ם גם לגשמים</p>
+                    
+                    <h3>מנהג ירושלים</h3>
+                    <p>מגניב שבירושלים התפתח מנהג להיזכר בשיטת מהר"ם: בשמחת תורה היו שוררים 90 פעמים "מחיה מתים... מוריד הגשם". הגרש"ז אויערבך הבחין בין "מוריד הגשם" (שמותר לאמרו 90 פעמים) ל"ותן ברכה" (שאין ראוי לאמרו כך לכתחילה).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Creative Addition -->
+        <div class="slide">
+            <div class="slide-front">
+                <button class="flip-btn" onclick="flipSlide(this)">פרטים מלאים</button>
+                <div class="slide-counter">11 / 11</div>
+                <h2 class="slide-title">חידוש עצמי</h2>
+                <p class="slide-summary">
+                    <span class="highlight">פעם שלישית גלידה:</span><br>
+                    האם זה כמו שיטת מהר"ם או רבינו פרץ?<br><br>
+                    <strong>התשובה המפתיעה...</strong>
+                </p>
+            </div>
+            <div class="slide-back">
+                <button class="flip-btn" onclick="flipSlide(this)">חזרה לסיכום</button>
+                <div class="slide-counter">11 / 11</div>
+                <div class="slide-detail">
+                    <h3>חידוש עצמי</h3>
+                    
+                    <p>כולנו מכירים את המושג פעם שלישית גלידה? מזה מושג זה? לכוראה היינו רוצים ללכת לשיטת המהר"ם - שאחרי 3 פעמים נוצר הרגל המפגש וממילא בפעם השלישית נהיה מועדים לגלידה. אך אין בזה טיפה מן האמת מכיוון והגלידה מעלה את האדם מן עצמו, למדרגות גבוהות מאוד. ומעיינן שאנו נולדנו להגיע לדרגות אלו - חייב להיות שאנו נולדים עם הצורך לגלידה. ולכן פעם שלישית גלידה הוא כשיטת רבינו פרץ.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">❮ הקודם</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">הבא ❯</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                slide.classList.remove('flipped');
+            });
+            
+            if (n >= totalSlides) currentSlide = 0;
+            if (n < 0) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            showSlide(currentSlide);
+        }
+
+        function flipSlide(button) {
+            const slide = button.closest('.slide');
+            slide.classList.toggle('flipped');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                if (currentSlide < totalSlides - 1) changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentSlide > 0) changeSlide(-1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                e.preventDefault();
+                const activeSlide = document.querySelector('.slide.active');
+                const flipBtn = activeSlide.querySelector('.flip-btn');
+                if (flipBtn) flipSlide(flipBtn);
+            }
+        });
+
+        // Touch support for mobile
+        let startX = 0;
+        let endX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const threshold = 50;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0 && currentSlide < totalSlides - 1) {
+                    // Swipe left - next slide
+                    changeSlide(1);
+                } else if (diff < 0 && currentSlide > 0) {
+                    // Swipe right - previous slide
+                    changeSlide(-1);
+                }
+            }
+        }
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
